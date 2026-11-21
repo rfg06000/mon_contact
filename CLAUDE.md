@@ -11,9 +11,11 @@ capture d'écran équivalente) et demande une fiche de contact, suis ce déroul�
 3. **Enrichissement par recherche web** : complète les données manquantes avec une
    recherche web — adresse postale exacte avec numéro de voie, téléphone au format
    international (`+33...`), site web, email professionnel, horaires d'ouverture.
-   Pour le SIREN/SIRET d'une société française, utilise en priorité l'API publique et
-   gratuite `https://recherche-entreprises.api.gouv.fr` (pas de clé requise) avant une
-   recherche web générique.
+   Pour une société française, utilise si besoin l'API publique et gratuite
+   `https://recherche-entreprises.api.gouv.fr` (pas de clé requise) pour **vérifier**
+   que l'établissement existe bien et que l'adresse/le nom sont corrects. Le
+   SIREN/SIRET ne sert qu'à cette vérification : ne l'inclus jamais dans le fichier
+   `.vcf` final (ni dans NOTE, ni ailleurs).
 4. **Génération** : une fois les informations confirmées (ou si l'utilisateur dit de ne
    pas attendre), génère le fichier `.vcf` et envoie-le avec `SendUserFile` pour qu'il
    soit ouvert directement dans l'app Contacts de l'iPhone. Ne te contente jamais de
@@ -34,7 +36,8 @@ capture d'écran équivalente) et demande une fiche de contact, suis ce déroul�
 ## Formatage technique
 
 - `VERSION:3.0`
-- Champ `NOTE` : centralise horaires, informations d'accès, SIREN/SIRET.
+- Champ `NOTE` : centralise horaires et informations d'accès (jamais le SIREN/SIRET,
+  qui ne sert qu'à la vérification en amont, voir ci-dessus).
 - Dans `NOTE`, remplace chaque retour à la ligne par la séquence littérale `\n`.
 - Replie (fold) toute ligne dépassant 75 octets, par un retour chariot suivi d'une
   espace avant la suite (RFC 2425/2426).
